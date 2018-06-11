@@ -370,6 +370,90 @@ class TestPost:
         data["salary"] = self.special_characaters
         self.validate_field(data, post_url, get_url)
 
+    def test_blank_value_in_first_name(self, data, post_url, get_url):
+        """
+        test putting blank_value in first name
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["first_name"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_last_name(self, data, post_url, get_url):
+        """
+        test putting blank_value in last name
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["last_name"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_username(self, data, post_url, get_url):
+        """
+        test putting blank_value in username
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["username"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_email(self, data, post_url, get_url):
+        """
+        test putting special characters in email
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["email"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_department(self, data, post_url, get_url):
+        """
+        test putting blank_value in department
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["department"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_age(self, data, post_url, get_url):
+        """
+        test putting blank_value in username
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["age"] = ""
+        self.validate_field(data, post_url, get_url)
+
+    def test_blank_value_in_salary(self, data, post_url, get_url):
+        """
+        test putting blank_value in username
+        :param data: 
+        :param post_url: 
+        :param get_url: 
+        :return: 
+        """
+
+        data["salary"] = ""
+        self.validate_field(data, post_url, get_url)
+
     def test_high_age_value(self, data, post_url, get_url):
         """
         test putting high values in age
@@ -382,7 +466,7 @@ class TestPost:
         data["age"] = 100000
         self.validate_field(data, post_url, get_url)
 
-    def test_hogh_salary_value(self, data, post_url, get_url):
+    def test_high_salary_value(self, data, post_url, get_url):
         """
         test putting high values in age
         :param data: 

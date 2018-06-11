@@ -439,7 +439,7 @@ class TestPost:
         :return: 
         """
 
-        data["age"] = ""
+        data["age"] = None
         self.validate_field(data, post_url, get_url)
 
     def test_blank_value_in_salary(self, data, post_url, get_url):
@@ -451,7 +451,7 @@ class TestPost:
         :return: 
         """
 
-        data["salary"] = ""
+        data["salary"] = None
         self.validate_field(data, post_url, get_url)
 
     def test_high_age_value(self, data, post_url, get_url):

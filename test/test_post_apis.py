@@ -1,37 +1,38 @@
-import json
-
 import requests
 
 from conftest import fake
 
+special_characters = "@#$%^&*()!`~{},./[]\|:<>?"
+
+
+def validate_field(data, post_url, get_url):
+    """
+    Utility function to test for failure if one or more filed are missing
+    or has incorrect data type in post
+    :param data: 
+    :param post_url: 
+    :param get_url: 
+    :return: 
+    """
+    get_response = requests.get(get_url)
+    length = len(get_response.json())
+
+    assert get_response.status_code == 200
+
+    response = requests.post(url=post_url, json=data)
+
+    print(response.status_code)
+
+    assert response.status_code == 400
+
+    get_response = requests.get(get_url)
+    new_length = len(get_response.json())
+
+    assert get_response.status_code == 200
+    assert new_length == length
+
 
 class TestPost:
-
-    special_characters = "@#$%^&*()!`~{},./[]\|:<>?"
-
-    def validate_field(self, data, post_url, get_url):
-        """
-        Utility function to test for failure if one or more filed are missing
-        or has incorrect data typein post
-        :param data: 
-        :param post_url: 
-        :param get_url: 
-        :return: 
-        """
-        get_response = requests.get(get_url)
-        length = len(get_response.json())
-
-        assert get_response.status_code == 200
-
-        response = requests.post(url=post_url, json=data)
-
-        assert response.status_code == 400
-
-        get_response = requests.get(get_url)
-        new_length = len(get_response.json())
-
-        assert get_response.status_code == 200
-        assert new_length == length
 
     def test_post_success(self, data, post_url, get_url):
         """
@@ -87,6 +88,9 @@ class TestPost:
 
         assert flag
 
+
+class TestWithoutField:
+
     def test_post_without_username(self, data, post_url, get_url):
         """
         test post without username
@@ -98,7 +102,7 @@ class TestPost:
 
         del data["username"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_first_name(self, data, post_url, get_url):
         """
@@ -111,7 +115,7 @@ class TestPost:
 
         del data["first_name"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_last_name(self, data, post_url, get_url):
         """
@@ -124,7 +128,7 @@ class TestPost:
 
         del data["last_name"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_email(self, data, post_url, get_url):
         """
@@ -137,7 +141,7 @@ class TestPost:
 
         del data["email"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_department(self, data, post_url, get_url):
         """
@@ -150,7 +154,7 @@ class TestPost:
 
         del data["department"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_age(self, data, post_url, get_url):
         """
@@ -163,7 +167,7 @@ class TestPost:
 
         del data["age"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_without_salary(self, data, post_url, get_url):
         """
@@ -176,7 +180,10 @@ class TestPost:
 
         del data["salary"]
 
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
+
+
+class TestImproperFieldValue:
 
     def test_post_improper_username_field_type(self, data, post_url, get_url):
         """
@@ -188,7 +195,7 @@ class TestPost:
         """
 
         data["username"] = 5000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_first_name_field_type(self, data, post_url, get_url):
         """
@@ -200,7 +207,7 @@ class TestPost:
         """
 
         data["first_name"] = 5000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_last_name_field_type(self, data, post_url, get_url):
         """
@@ -212,7 +219,7 @@ class TestPost:
         """
 
         data["last_name"] = 5000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_email_field_type(self, data, post_url, get_url):
         """
@@ -224,7 +231,7 @@ class TestPost:
         """
 
         data["email"] = 5000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_department_field_type(self, data, post_url, get_url):
         """
@@ -236,7 +243,7 @@ class TestPost:
         """
 
         data["department"] = 5000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_age_field_type(self, data, post_url, get_url):
         """
@@ -248,7 +255,7 @@ class TestPost:
         """
 
         data["age"] = fake.word()
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_post_improper_salary_field_type(self, data, post_url, get_url):
         """
@@ -260,7 +267,10 @@ class TestPost:
         """
 
         data["salary"] = fake.word()
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
+
+
+class TestNegativeValues:
 
     def test_negative_age_value(self, data, post_url, get_url):
         """
@@ -272,7 +282,7 @@ class TestPost:
         """
 
         data["age"] = -10
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_negative_salary_value(self, data, post_url, get_url):
         """
@@ -284,7 +294,10 @@ class TestPost:
         """
 
         data["salary"] = -10
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
+
+
+class TestSpecialCharacters:
 
     def test_special_characters_in_first_name(self, data, post_url, get_url):
         """
@@ -295,8 +308,8 @@ class TestPost:
         :return: 
         """
 
-        data["first_name"] = self.special_characaters
-        self.validate_field(data, post_url, get_url)
+        data["first_name"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_last_name(self, data, post_url, get_url):
         """
@@ -307,8 +320,8 @@ class TestPost:
         :return: 
         """
 
-        data["last_name"] = self.special_characaters
-        self.validate_field(data, post_url, get_url)
+        data["last_name"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_username(self, data, post_url, get_url):
         """
@@ -319,8 +332,8 @@ class TestPost:
         :return: 
         """
 
-        data["username"] = self.special_characters
-        self.validate_field(data, post_url, get_url)
+        data["username"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_email(self, data, post_url, get_url):
         """
@@ -331,8 +344,8 @@ class TestPost:
         :return: 
         """
 
-        data["email"] = self.special_characters
-        self.validate_field(data, post_url, get_url)
+        data["email"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_department(self, data, post_url, get_url):
         """
@@ -343,8 +356,8 @@ class TestPost:
         :return: 
         """
 
-        data["department"] = self.special_characters
-        self.validate_field(data, post_url, get_url)
+        data["department"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_age(self, data, post_url, get_url):
         """
@@ -355,8 +368,8 @@ class TestPost:
         :return: 
         """
 
-        data["age"] = self.special_characters
-        self.validate_field(data, post_url, get_url)
+        data["age"] = special_characters
+        validate_field(data, post_url, get_url)
 
     def test_special_characters_in_salary(self, data, post_url, get_url):
         """
@@ -367,8 +380,11 @@ class TestPost:
         :return: 
         """
 
-        data["salary"] = self.special_characters
-        self.validate_field(data, post_url, get_url)
+        data["salary"] = special_characters
+        validate_field(data, post_url, get_url)
+
+
+class TestBlankValue:
 
     def test_blank_value_in_first_name(self, data, post_url, get_url):
         """
@@ -380,7 +396,7 @@ class TestPost:
         """
 
         data["first_name"] = ""
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_last_name(self, data, post_url, get_url):
         """
@@ -392,7 +408,7 @@ class TestPost:
         """
 
         data["last_name"] = ""
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_username(self, data, post_url, get_url):
         """
@@ -404,7 +420,7 @@ class TestPost:
         """
 
         data["username"] = ""
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_email(self, data, post_url, get_url):
         """
@@ -416,7 +432,7 @@ class TestPost:
         """
 
         data["email"] = ""
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_department(self, data, post_url, get_url):
         """
@@ -428,7 +444,7 @@ class TestPost:
         """
 
         data["department"] = ""
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_age(self, data, post_url, get_url):
         """
@@ -440,7 +456,7 @@ class TestPost:
         """
 
         data["age"] = None
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_blank_value_in_salary(self, data, post_url, get_url):
         """
@@ -452,7 +468,7 @@ class TestPost:
         """
 
         data["salary"] = None
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_high_age_value(self, data, post_url, get_url):
         """
@@ -464,7 +480,7 @@ class TestPost:
         """
 
         data["age"] = 100000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
     def test_high_salary_value(self, data, post_url, get_url):
         """
@@ -476,7 +492,7 @@ class TestPost:
         """
 
         data["salary"] = 1000000000000000
-        self.validate_field(data, post_url, get_url)
+        validate_field(data, post_url, get_url)
 
 
 class TestPostUnique:

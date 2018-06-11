@@ -1,8 +1,6 @@
 import requests
 import re
 
-from conftest import fake
-
 
 class TestGet:
 

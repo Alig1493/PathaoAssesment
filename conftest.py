@@ -1,3 +1,5 @@
+from random import randint
+
 import pytest
 
 from faker import Faker
@@ -25,5 +27,8 @@ def data():
         "last_name": fake.last_name(),
         "email": fake.email(),
         "department": fake.job(),
-        "age": randint()
+        "age": randint(20, 70),
+        "salary": randint(1000, 10000)
     }
+
+    return post_data

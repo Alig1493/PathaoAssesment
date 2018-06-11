@@ -1,6 +1,8 @@
 import requests
 import re
 
+from utils import verify_email
+
 
 class TestGet:
 
@@ -54,7 +56,7 @@ class TestGet:
                 assert isinstance(item.get("first_name", ""), str)
                 assert isinstance(item.get("last_name", ""), str)
                 assert isinstance(item.get("email", ""), str)
-                assert re.match(r"[^@]+@[^@]+\.[^@]+", item.get("email", ""))
+                assert verify_email(email=item.get("email", ""))
                 assert isinstance(item.get("department", ""), str)
 
                 # age should be integer

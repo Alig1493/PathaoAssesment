@@ -20,6 +20,15 @@ def post_url():
 
 
 @pytest.fixture
+def id_url():
+
+    def url(id):
+        return f"http://128.199.158.232:8002/employees/{id}"
+
+    return url
+
+
+@pytest.fixture
 def data():
     post_data = {
         "username": fake.name(),

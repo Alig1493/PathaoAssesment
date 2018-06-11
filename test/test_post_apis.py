@@ -7,7 +7,7 @@ from conftest import fake
 
 class TestPost:
 
-    special_characaters = "@#$%^&*()!`~{},./[]\|:<>?"
+    special_characters = "@#$%^&*()!`~{},./[]\|:<>?"
 
     def validate_field(self, data, post_url, get_url):
         """
@@ -319,7 +319,7 @@ class TestPost:
         :return: 
         """
 
-        data["username"] = self.special_characaters
+        data["username"] = self.special_characters
         self.validate_field(data, post_url, get_url)
 
     def test_special_characters_in_email(self, data, post_url, get_url):
@@ -331,7 +331,7 @@ class TestPost:
         :return: 
         """
 
-        data["email"] = self.special_characaters
+        data["email"] = self.special_characters
         self.validate_field(data, post_url, get_url)
 
     def test_special_characters_in_department(self, data, post_url, get_url):
@@ -343,7 +343,7 @@ class TestPost:
         :return: 
         """
 
-        data["department"] = self.special_characaters
+        data["department"] = self.special_characters
         self.validate_field(data, post_url, get_url)
 
     def test_special_characters_in_age(self, data, post_url, get_url):
@@ -355,7 +355,7 @@ class TestPost:
         :return: 
         """
 
-        data["age"] = self.special_characaters
+        data["age"] = self.special_characters
         self.validate_field(data, post_url, get_url)
 
     def test_special_characters_in_salary(self, data, post_url, get_url):
@@ -367,7 +367,7 @@ class TestPost:
         :return: 
         """
 
-        data["salary"] = self.special_characaters
+        data["salary"] = self.special_characters
         self.validate_field(data, post_url, get_url)
 
     def test_blank_value_in_first_name(self, data, post_url, get_url):

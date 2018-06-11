@@ -23,7 +23,12 @@ class TestGet:
         assert isinstance(data, list)
 
     def test_validate_get_data_values(self, get_url):
-
+        """
+        Testing if all the fields in the response payload list
+        contains values in them
+        :param get_url: 
+        :return: 
+        """
         response = requests.get(url=get_url)
 
         data = response.json()
@@ -42,7 +47,11 @@ class TestGet:
                 assert item.get("salary", "")
 
     def test_validate_get_data_value_types(self, get_url):
-
+        """
+        Checking the datatype of the fields in the returning payload list. 
+        :param get_url: 
+        :return: 
+        """
         response = requests.get(url=get_url)
 
         data = response.json()
@@ -61,5 +70,5 @@ class TestGet:
 
                 # age should be integer
                 assert not isinstance(item.get("age", ""), int)
-                # salary can be either an integer or flaot
+                # salary can be either an integer or float
                 assert isinstance(item.get("salary", ""), int) or isinstance(item.get("salary", ""), float)
